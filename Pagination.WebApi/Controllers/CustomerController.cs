@@ -13,11 +13,13 @@ namespace Pagination.WebApi.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
+        [HttpGet]
         public async Task<IActionResult> GetAll(PaginationFilter filter = null)
         {
             return default;
         }
-        public async Task<IActionResult> GetById(PaginationFilter filter = null)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
         {
             return default;
         }
