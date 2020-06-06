@@ -30,8 +30,13 @@ namespace Pagination.WebApi.Controllers
         public async Task<IActionResult> GetAll([FromQuery] PaginationFilter filter)
         {
             var route = Request.Path.Value;
-            var allCustomers = await context.Customers.ToListAsync();
-            var pagedReponse = PaginationHelper.CreatePagedReponse<Customer>(allCustomers, filter, uriService,route);
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var pagedData = await context.Customers
+               .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+               .Take(validFilter.PageSize)
+               .ToListAsync();
+            var totalRecords = await context.Customers.CountAsync();
+            var pagedReponse = PaginationHelper.CreatePagedReponse<Customer>(pagedData, validFilter, totalRecords, uriService,route);
             return Ok(pagedReponse);
         }
         [HttpGet("{id}")]
