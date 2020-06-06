@@ -9,26 +9,17 @@ namespace Pagination.WebApi.Wrappers
         {
 
         }
-        internal Response(bool succeeded, string message, IEnumerable<string> errors)
+        public Response(T data)
         {
-            Succeeded = succeeded;
-            Errors = errors.ToArray();
-            Message = message;
+            Succeeded = true;
+            Message = string.Empty;
+            Errors = null;
+            Data = data;
         }
         public T Data { get; set; }
         public bool Succeeded { get; set; }
 
         public string[] Errors { get; set; }
         public string Message { get; set; }
-
-        public static Response<T> Success(string message)
-        {
-            return new Response<T>(true, message, new string[] { });
-        }
-
-        public static Response<T> Failure(IEnumerable<string> errors)
-        {
-            return new Response<T>(false, string.Empty, errors);
-        }
     }
 }
