@@ -7,7 +7,6 @@ namespace Pagination.WebApi.Wrappers
     {
         public Response()
         {
-
         }
         public Response(T data)
         {
